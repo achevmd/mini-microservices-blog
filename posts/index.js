@@ -7,6 +7,7 @@ const axios = require('axios');
 // Create express app
 const app = express();
 app.use(express.json());
+app.use(cors());
 const posts = {};
 
 // Retrieve posts
