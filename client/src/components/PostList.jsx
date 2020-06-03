@@ -11,7 +11,7 @@ export default (props) => {
   }, []);
 
   const fetchPosts = async () => {
-    const res = await axios.get('http://localhost:4000/posts');
+    const res = await axios.get('http://localhost:4002/posts');
     setPosts(res.data);
   };
 
@@ -19,7 +19,7 @@ export default (props) => {
     <div key={key} className="card">
       <h3>{posts[key].title}</h3>
       <CreateComment postId={key} />
-      <CommentList postId={key} />
+      <CommentList comments={posts[key].comments} />
     </div>
   ));
 

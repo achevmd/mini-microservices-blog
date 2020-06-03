@@ -22,19 +22,17 @@ export default (props) => {
   return (
     <div className="create-post-container">
       <h3>Create post</h3>
-      {!isLoading && (
-        <div className="flex">
-          <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            inputMode="text"
-            placeholder="Post title"
-          />
-          <button disabled={isLoading} className="button" onClick={createPost}>
-            Create
-          </button>
-        </div>
-      )}
+      <div className="flex">
+        <input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          inputMode="text"
+          placeholder="Post title"
+        />
+        <button disabled={isLoading} className="button" onClick={createPost}>
+          Create
+        </button>
+      </div>
     </div>
   );
 };
