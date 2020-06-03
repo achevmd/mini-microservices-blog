@@ -1,12 +1,14 @@
 import React from 'react';
-import './App.css';
+import './styles/App.scss';
 
 import CreatePost from './components/CreatePost';
+import PostList from './components/PostList';
 
 function App() {
   return (
     <div className="App">
       <CreatePost />
+      <PostList />
     </div>
   );
 }
