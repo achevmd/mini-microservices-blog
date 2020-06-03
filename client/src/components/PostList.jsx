@@ -25,7 +25,7 @@ export default (props) => {
 
   return (
     <div className="container">
-      <h3>Post list</h3>
+      <h3>Posts</h3>
       <div className="post-list">{renderedPosts}</div>
     </div>
   );
