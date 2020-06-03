@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 
 export default ({ comments }) => {
-  const renderedComments = comments.map((comment) => (
+  const renderedComments = comments.map((comment, index) => (
     <div key={comment.id} className="comment">
-      {comment.content}
+      {index + 1}. {comment.status === 'pending' && <code>Comment moderation pending</code>}
+      {comment.status === 'rejected' && <code>Comment rejected</code>}
+      {comment.status === 'approved' && comment.content}
     </div>
   ));
 
