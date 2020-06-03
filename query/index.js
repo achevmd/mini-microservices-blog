@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 const cors = require('cors');
 
 // Create express app
@@ -8,17 +9,7 @@ app.use(cors());
 
 const posts = {};
 
-// Retrieve posts
-app.get('/posts', (req, res) => {
-  res.send(posts);
-});
-
-// Listen to events
-app.post('/events', (req, res) => {
-  // Event type & data
-  const { type, data } = req.body;
-  console.log(type);
-
+const eventHandler = (type, data) => {
   // Process 'PostCreated' event
   if (type === 'PostCreated') {
     const { id, title } = data;
@@ -35,7 +26,6 @@ app.post('/events', (req, res) => {
   // Process 'CommentUpdated' event
   if (type === 'CommentUpdated') {
     const { id: commentId, content, status, postId } = data;
-    console.log(status);
     const post = posts[postId];
     let comment = post.comments.find((c) => c.id === commentId);
     if (comment) {
@@ -43,11 +33,27 @@ app.post('/events', (req, res) => {
       comment.content = content;
     }
   }
+};
 
+// Retrieve posts
+app.get('/posts', (req, res) => {
+  res.send(posts);
+});
+
+// Listen to events
+app.post('/events', (req, res) => {
+  // Process events
+  const { type, data } = req.body;
+  eventHandler(type, data);
   res.send({});
 });
 
 // Listen to port
-app.listen(4002, () => {
+app.listen(4002, async () => {
   console.log('Listening on 4002');
+
+  const { data: events } = await axios.get('http://localhost:4005/events');
+  events.forEach((event) => {
+    eventHandler(event.type, event.data);
+  });
 });
